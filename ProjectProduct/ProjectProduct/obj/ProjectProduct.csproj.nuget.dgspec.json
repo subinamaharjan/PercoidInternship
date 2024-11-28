@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\subina.m\\source\\repos\\ProjectProduct\\ProjectProduct\\ProjectProduct.csproj": {}
+    "D:\\Percoid Backend\\ProjectProduct\\ProjectProduct\\ProjectProduct.csproj": {}
   },
   "projects": {
-    "C:\\Users\\subina.m\\source\\repos\\ProjectProduct\\ProjectProduct\\ProjectProduct.csproj": {
+    "D:\\Percoid Backend\\ProjectProduct\\ProjectProduct\\ProjectProduct.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\subina.m\\source\\repos\\ProjectProduct\\ProjectProduct\\ProjectProduct.csproj",
+        "projectUniqueName": "D:\\Percoid Backend\\ProjectProduct\\ProjectProduct\\ProjectProduct.csproj",
         "projectName": "ProjectProduct",
-        "projectPath": "C:\\Users\\subina.m\\source\\repos\\ProjectProduct\\ProjectProduct\\ProjectProduct.csproj",
+        "projectPath": "D:\\Percoid Backend\\ProjectProduct\\ProjectProduct\\ProjectProduct.csproj",
         "packagesPath": "C:\\Users\\subina.m\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\subina.m\\source\\repos\\ProjectProduct\\ProjectProduct\\obj\\",
+        "outputPath": "D:\\Percoid Backend\\ProjectProduct\\ProjectProduct\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\subina.m\\AppData\\Roaming\\NuGet\\NuGet.Config",

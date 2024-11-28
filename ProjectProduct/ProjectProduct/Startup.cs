@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using ProjectProduct.Data;
+using ProjectProduct.Interfaces;
 // ProjectProduct.Interfaces;
 using ProjectProduct.Repositories;
 using System;
@@ -32,7 +33,7 @@ namespace ProjectProduct
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
            
-            services.AddScoped<ProductRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             services.AddControllers();
 

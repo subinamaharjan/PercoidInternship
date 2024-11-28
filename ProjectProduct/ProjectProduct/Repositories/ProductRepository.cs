@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjectProduct.Data;
-//using ProjectProduct.Interfaces;
+using ProjectProduct.Interfaces;
 using ProjectProduct.Models;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProjectProduct.Repositories
 {
-    public class ProductRepository 
+    public class ProductRepository : IProductRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -41,7 +41,7 @@ namespace ProjectProduct.Repositories
         }
 
         // Update an existing product
-        public async Task<Product> UpdateProductAsync(Product product)
+        public async Task<Product> UpdateProductAsync(int id,Product product)
         {
             var existingProduct = await _context.Products.FindAsync(product.Id);
             if (existingProduct == null)
@@ -67,5 +67,7 @@ namespace ProjectProduct.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+        
     }
 }

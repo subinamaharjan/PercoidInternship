@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-//using ProjectProduct.Interfaces;
+using ProjectProduct.Interfaces;
 using ProjectProduct.Models;
-using ProjectProduct.Repositories;
+using ProjectProduct.Repositories; 
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,9 +11,9 @@ namespace ProjectProduct.Controllers
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
-        private readonly ProductRepository _productRepository;
+        private readonly IProductRepository _productRepository;
 
-        public ProductController(ProductRepository productRepository)
+        public ProductController(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }
@@ -65,7 +65,7 @@ namespace ProjectProduct.Controllers
                 return BadRequest(ModelState);
             }
 
-            var updatedProduct = await _productRepository.UpdateProductAsync(product);
+            var updatedProduct = await _productRepository.UpdateProductAsync(id,product);
             return Ok(updatedProduct);
         }
 
@@ -73,8 +73,8 @@ namespace ProjectProduct.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            var success = await _productRepository.DeleteProductAsync(id);
-            if (!success)
+            var product = await _productRepository.DeleteProductAsync(id);
+            if (!product)
             {
                 return NotFound();
             }
