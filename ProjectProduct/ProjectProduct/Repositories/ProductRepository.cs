@@ -32,8 +32,8 @@ namespace ProjectProduct.Repositories
         // Create a new product
         public async Task<Product> CreateProductAsync(Product product)
         {
-            if (product == null)
-                throw new ArgumentNullException(nameof(product));
+            /*if (product == null)
+                throw new ArgumentNullException(nameof(product));*/
 
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
