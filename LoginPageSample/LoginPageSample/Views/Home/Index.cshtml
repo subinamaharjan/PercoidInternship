@@ -11,6 +11,10 @@
     <title>Login</title>
 </head>
 <body>
+    <p>
+        Don’t have an account? <a href="@Url.Action("Signup", "Login")">Signup here</a>.
+    </p>
+
     <h2>Login</h2>
     @if (!string.IsNullOrEmpty(ViewBag.Error))
     {

@@ -51,5 +51,35 @@ namespace LoginPageSample.Controllers
             Session.Clear();
             return RedirectToAction("Index");
         }
+
+        //signup page Get
+        public ActionResult Signup()
+        {
+            return View();
+        }
+        //signup Post
+        [HttpPost]
+        public ActionResult Signup(string username,string password)
+        {
+            //checks if any user exist
+            if (Users.Any(u => u.UserName == username))
+            {
+                ViewBag.Error = "Username already exist.Please choose another.";
+                return View();
+            }
+
+            //add new to the list
+            var newUser = new User
+            {
+                Id = Users.Count + 1,
+                UserName = username,
+                Password = password
+            };
+            Users.Add(newUser);
+            ViewBag.Success = "Signup Successful! you can login now.";
+            return View();
+            
+        }
+
     }
 }
