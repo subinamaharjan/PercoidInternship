@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\subina.m\\source\\repos\\CrudDapper\\CrudDapper\\CrudDapper.csproj": {}
+    "D:\\Percoid Backend\\CrudDapper - Copy\\CrudDapper\\CrudDapper.csproj": {}
   },
   "projects": {
-    "C:\\Users\\subina.m\\source\\repos\\CrudDapper\\CrudDapper\\CrudDapper.csproj": {
+    "D:\\Percoid Backend\\CrudDapper - Copy\\CrudDapper\\CrudDapper.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\subina.m\\source\\repos\\CrudDapper\\CrudDapper\\CrudDapper.csproj",
+        "projectUniqueName": "D:\\Percoid Backend\\CrudDapper - Copy\\CrudDapper\\CrudDapper.csproj",
         "projectName": "CrudDapper",
-        "projectPath": "C:\\Users\\subina.m\\source\\repos\\CrudDapper\\CrudDapper\\CrudDapper.csproj",
+        "projectPath": "D:\\Percoid Backend\\CrudDapper - Copy\\CrudDapper\\CrudDapper.csproj",
         "packagesPath": "C:\\Users\\subina.m\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\subina.m\\source\\repos\\CrudDapper\\CrudDapper\\obj\\",
+        "outputPath": "D:\\Percoid Backend\\CrudDapper - Copy\\CrudDapper\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\subina.m\\AppData\\Roaming\\NuGet\\NuGet.Config",

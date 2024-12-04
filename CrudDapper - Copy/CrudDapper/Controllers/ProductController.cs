@@ -40,7 +40,10 @@ namespace CrudDapper.Controllers
         {
             try
             {
-
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
                 var productId = await _productService.AddProductAsync(product);
                 return CreatedAtAction(nameof(GetProductById), new { id = productId }, product);
             }
@@ -54,7 +57,12 @@ namespace CrudDapper.Controllers
         public async Task<IActionResult> UpdateProduct(int id, Product product)
         {
             try
+
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
                 product.Id = id;
                 await _productService.UpdateProductAsync(id,product);
                 return NoContent();
