@@ -151,7 +151,6 @@ D:\Percoid Backend\LoginPageSample\LoginPageSample\bin\System.Web.WebPages.Razor
 D:\Percoid Backend\LoginPageSample\LoginPageSample\bin\Newtonsoft.Json.xml
 D:\Percoid Backend\LoginPageSample\LoginPageSample\bin\Antlr3.Runtime.pdb
 D:\Percoid Backend\LoginPageSample\LoginPageSample\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Percoid Backend\LoginPageSample\LoginPageSample\obj\Debug\LoginPageSample.csprojAssemblyReference.cache
 D:\Percoid Backend\LoginPageSample\LoginPageSample\obj\Debug\LoginPageSample.csproj.CoreCompileInputs.cache
 D:\Percoid Backend\LoginPageSample\LoginPageSample\obj\Debug\LoginPageSample.csproj.CopyComplete
 D:\Percoid Backend\LoginPageSample\LoginPageSample\obj\Debug\LoginPageSample.dll

@@ -1,8 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
-}
-@{
-    Layout = null;
+    ViewBag.Title = "Login";
 }
 
 <!DOCTYPE html>
@@ -11,21 +8,36 @@
     <title>Login</title>
 </head>
 <body>
-    <h2>Login</h2>
-    @if (!string.IsNullOrEmpty(ViewBag.Error))
+    <h1>Login</h1>
+
+    <!-- Display success or error messages -->
+    @if (TempData["Message"] != null)
     {
-        <p style="color: red;">@ViewBag.Error</p>
+        <p style="color: green;">@TempData["Message"]</p>
     }
-    <form method="post" action="/Login/Authenticate">
-        <label>Username:</label>
-        <input type="text" name="username" required />
+    @if (TempData["Error"] != null)
+    {
+        <p style="color: red;">@TempData["Error"]</p>
+    }
+
+    <!-- Login Form -->
+    @using (Html.BeginForm("Authenticate", "Login", FormMethod.Post))
+    {
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required />
+        </div>
         <br />
-        <label>Password:</label>
-        <input type="password" name="password" required />
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+        </div>
         <br />
         <button type="submit">Login</button>
-    </form>
+    }
+
+    <p>
+        Don’t have an account? <a href="@Url.Action("Signup", "Login")">Signup here</a>.
+    </p>
 </body>
 </html>
-
-              

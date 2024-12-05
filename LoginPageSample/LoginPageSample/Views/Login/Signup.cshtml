@@ -1,26 +1,31 @@
-﻿<h2>Signup</h2>
+﻿@model  LoginPageSample.Models.User
 
-@using (Html.BeginForm("Signup", "Login", FormMethod.Post))
-{
-    <div>
-        <label>Username:</label>
-        <input type="text" name="username" required />
-    </div>
-    <div>
-        <label>Password:</label>
-        <input type="password" name="password" required />
-    </div>
-    <button type="submit">Signup</button>
-}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+</head>
+<body>
+    <h1>Create an Account</h1>
 
-@if (ViewBag.Error != null)
-{
-    <p style="color: red;">@ViewBag.Error</p>
-}
-
-@if (ViewBag.Success != null)
-{
-    <p style="color: green;">@ViewBag.Success</p>
-}
-
- 
+    @using (Html.BeginForm("Signup", "Login", FormMethod.Post))
+    {
+        <div>
+            <label for="username">Username:</label>
+            @Html.TextBoxFor(m => m.Username, new { @class = "form-control", required = "required" })
+            @Html.ValidationMessageFor(m => m.Username)
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", required = "required" })
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", required = "required" })
+            @Html.ValidationMessageFor(m => m.Email)
+        </div>
+        <button type="submit">Signup</button>
+    }
+</body>
+</html>

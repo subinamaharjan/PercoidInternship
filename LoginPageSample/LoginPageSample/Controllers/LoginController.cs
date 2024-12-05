@@ -1,6 +1,7 @@
 ﻿using LoginPageSample.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,12 +10,7 @@ namespace LoginPageSample.Controllers
 {
     public class LoginController : Controller
     {
-        private static readonly List<User> Users = new List<User>
-        {
-            new User{Id=1, UserName="admin",Password="1234"},
-            new User{Id=2,UserName="user",Password="user123"}
-        };
-
+        private readonly string connectionString = "Server=DESKTOP-SUBINA;Database=ProductDb;Integrated Security=True;TrustServerCertificate=True;";
         // GET: Login
         public ActionResult Index()
         {
@@ -24,26 +20,39 @@ namespace LoginPageSample.Controllers
         //POST login
         public ActionResult Authenticate(string username, string password)
         {
-            var user = Users.FirstOrDefault(u => u.UserName == username && u.Password == password);
-            if (user != null)
+            using (var connection = new SqlConnection(connectionString))
             {
-                //save user info in  a session or authenticate user
-                Session["UserId"] = user.Id;
-                Session["UserName"] = user.UserName;
-                return RedirectToAction("Welcome");
+                connection.Open();
+                var query = "SELECT *FROM Users WHERE Username=@Username AND Password=@Password";
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Username", username);
+                    command.Parameters.AddWithValue("@Password", password);
+
+                    var result = command.ExecuteScalar();
+                    int count = (result != null) ? Convert.ToInt32(result) : 0;
+
+
+                    if (count > 0)
+                    {
+                        TempData["Message"] = "Login Successfull";
+                        return RedirectToAction("Welcome"); //Redirect to secure page
+                    }
+
+
+                    TempData["Error"] = "Invalid username or password.";
+                    return RedirectToAction("Index");
+                }
             }
-            ViewBag.Error = "Invalid username or password.";
-            return View("Index");
         }
+
+        
 
         public ActionResult Welcome()
         {
-            if (Session["UserId"] != null)
-            {
-                ViewBag.UserName = Session["UserName"];
+            
                 return View();
-            }
-            return RedirectToAction("Index");
+          
         }
 
         public ActionResult Logout()
@@ -59,27 +68,31 @@ namespace LoginPageSample.Controllers
         }
         //signup Post
         [HttpPost]
-        public ActionResult Signup(string username,string password)
+        public ActionResult Signup(User user)
         {
-            //checks if any user exist
-            if (Users.Any(u => u.UserName == username))
+            if (ModelState.IsValid)
             {
-                ViewBag.Error = "Username already exist.Please choose another.";
-                return View();
+                //save the user to the database
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    var query = "INSERT INTO Users(Username, Password, Email) VALUES(@Username, @Password, @Email)";
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Username", user.Username);
+                        command.Parameters.AddWithValue("@Password", user.Password);
+                        command.Parameters.AddWithValue("Email", user.Email);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                TempData["Message"] = "Signup Successful! Now you can login.";
+                return RedirectToAction("Index");
             }
-
-            //add new to the list
-            var newUser = new User
-            {
-                Id = Users.Count + 1,
-                UserName = username,
-                Password = password
-            };
-            Users.Add(newUser);
-            ViewBag.Success = "Signup Successful! you can login now.";
-            return View();
-            
+            return View(user);//if validation fails, return the form with errors.
         }
+
+
+
 
     }
 }
