@@ -155,3 +155,6 @@ D:\Percoid Backend\LoginPageSample\LoginPageSample\obj\Debug\LoginPageSample.csp
 D:\Percoid Backend\LoginPageSample\LoginPageSample\obj\Debug\LoginPageSample.csproj.CopyComplete
 D:\Percoid Backend\LoginPageSample\LoginPageSample\obj\Debug\LoginPageSample.dll
 D:\Percoid Backend\LoginPageSample\LoginPageSample\obj\Debug\LoginPageSample.pdb
+D:\Percoid Backend\LoginPageSample\LoginPageSample\obj\Debug\LoginPageSample.csprojAssemblyReference.cache
+D:\Percoid Backend\LoginPageSample\LoginPageSample\bin\BCrypt.Net-Next.dll
+D:\Percoid Backend\LoginPageSample\LoginPageSample\bin\BCrypt.Net-Next.xml

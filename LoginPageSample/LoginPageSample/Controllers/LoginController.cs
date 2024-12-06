@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace LoginPageSample.Controllers
@@ -11,6 +12,22 @@ namespace LoginPageSample.Controllers
     public class LoginController : Controller
     {
         private readonly string connectionString = "Server=DESKTOP-SUBINA;Database=ProductDb;Integrated Security=True;TrustServerCertificate=True;";
+
+        //Hashing
+        public static class PasswordHelper
+        {
+            //password Hashing
+            public static string HashPassword(string password)
+            {
+                return BCrypt.Net.BCrypt.HashPassword(password);
+            }
+
+            //password Verification against the hash
+            public static bool VerifyPassword(string password,string hashedPassword)
+            {
+                return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
+            }
+        }
         // GET: Login
         public ActionResult Index()
         {
@@ -20,32 +37,31 @@ namespace LoginPageSample.Controllers
         //POST login
         public ActionResult Authenticate(string username, string password)
         {
+            
+            
+            //this code is used when we dont have any unhashed pw in the database 
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                var query = "SELECT *FROM Users WHERE Username=@Username AND Password=@Password";
+                var query = "SELECT *FROM Users WHERE Username=@Username";
                 using (var command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@Username", username);
-                    command.Parameters.AddWithValue("@Password", password);
-
-                    var result = command.ExecuteScalar();
-                    int count = (result != null) ? Convert.ToInt32(result) : 0;
-
-
-                    if (count > 0)
+                    var hashedPassword = command.ExecuteScalar()?.ToString();
+                    if (hashedPassword != null && PasswordHelper.VerifyPassword(password, hashedPassword))
                     {
+
                         TempData["Message"] = "Login Successfull";
                         return RedirectToAction("Welcome"); //Redirect to secure page
                     }
 
 
                     TempData["Error"] = "Invalid username or password.";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index");//redirecr back to the login page
                 }
             }
         }
-
+ 
         
 
         public ActionResult Welcome()
@@ -68,10 +84,13 @@ namespace LoginPageSample.Controllers
         }
         //signup Post
         [HttpPost]
-        public ActionResult Signup(User user)
+        
+        public ActionResult Signup(string username, string password, string email)
         {
             if (ModelState.IsValid)
             {
+                string hashedPassword = PasswordHelper.HashPassword(password);
+
                 //save the user to the database
                 using (var connection = new SqlConnection(connectionString))
                 {
@@ -79,16 +98,16 @@ namespace LoginPageSample.Controllers
                     var query = "INSERT INTO Users(Username, Password, Email) VALUES(@Username, @Password, @Email)";
                     using (var command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@Username", user.Username);
-                        command.Parameters.AddWithValue("@Password", user.Password);
-                        command.Parameters.AddWithValue("Email", user.Email);
+                        command.Parameters.AddWithValue("@Username", username);
+                        command.Parameters.AddWithValue("@Password", hashedPassword);
+                        command.Parameters.AddWithValue("Email", email);
                         command.ExecuteNonQuery();
                     }
                 }
                 TempData["Message"] = "Signup Successful! Now you can login.";
                 return RedirectToAction("Index");
             }
-            return View(user);//if validation fails, return the form with errors.
+            return View();//if validation fails, return the form with errors.
         }
 
 

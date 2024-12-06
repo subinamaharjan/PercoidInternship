@@ -13,7 +13,7 @@ namespace LoginPageSample.Models
         [StringLength(20,MinimumLength =3,ErrorMessage="username cant exceed 20 characters.")]
         public string Username { get; set; }
         [Required]
-        [StringLength(10,MinimumLength =6,ErrorMessage ="Password must be at least 6 character long.")]
+        [StringLength(200,MinimumLength =6,ErrorMessage ="Password must be at least 6 character long.")]
         public string Password { get; set; }
         [Required]
         [EmailAddress(ErrorMessage="Invalid Email Address format")]
