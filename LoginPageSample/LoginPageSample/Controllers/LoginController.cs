@@ -11,7 +11,7 @@ namespace LoginPageSample.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly string connectionString = "Server=DESKTOP-SUBINA;Database=ProductDb;Integrated Security=True;TrustServerCertificate=True;";
+        private readonly string connectionString = "Server=DESKTOP-SUBINA;Database=ProjectDb;Integrated Security=True;TrustServerCertificate=True;";
 
         //Hashing
         public static class PasswordHelper
@@ -22,8 +22,11 @@ namespace LoginPageSample.Controllers
                 return BCrypt.Net.BCrypt.HashPassword(password);
             }
 
+            
+            
+
             //password Verification against the hash
-            public static bool VerifyPassword(string password,string hashedPassword)
+            public static bool VerifyPassword(string password, string hashedPassword)
             {
                 return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
             }
@@ -37,33 +40,49 @@ namespace LoginPageSample.Controllers
         //POST login
         public ActionResult Authenticate(string username, string password)
         {
-            
-            
+
+
             //this code is used when we dont have any unhashed pw in the database 
             using (var connection = new SqlConnection(connectionString))
             {
-                connection.Open();
-                var query = "SELECT *FROM Users WHERE Username=@Username";
-                using (var command = new SqlCommand(query, connection))
+                try
                 {
-                    command.Parameters.AddWithValue("@Username", username);
-                    var hashedPassword = command.ExecuteScalar()?.ToString();
-                    if (hashedPassword != null && PasswordHelper.VerifyPassword(password, hashedPassword))
+
+                    connection.Open();
+                    var query = "SELECT Password FROM Users WHERE Username=@Username";
+                    using (var command = new SqlCommand(query, connection))
                     {
+                        command.Parameters.AddWithValue("@Username", username);
+                        var hashedPassword = command.ExecuteScalar()?.ToString();
+                        if (hashedPassword != null && PasswordHelper.VerifyPassword(password, hashedPassword))
+                        {
 
-                        TempData["Message"] = "Login Successfull";
-                        return RedirectToAction("Welcome"); //Redirect to secure page
+                            TempData["Message"] = "Login Successfull";
+                            return RedirectToAction("Welcome"); //Redirect to secure page
+                        }
+
+
+                        TempData["Error"] = "Invalid username or password.";
+                        return RedirectToAction("Index");//redirect back to the login page
                     }
-
-
-                    TempData["Error"] = "Invalid username or password.";
-                    return RedirectToAction("Index");//redirecr back to the login page
                 }
+                catch(Exception)
+                {
+                    TempData["Error"] = "An error occured during login. Please try again.";
+                    return RedirectToAction("Index");
+                }
+                
             }
-        }
- 
-        
 
+        }
+           
+
+            
+
+      
+
+       
+    
         public ActionResult Welcome()
         {
             
